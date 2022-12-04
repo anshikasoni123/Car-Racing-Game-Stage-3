@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Car Racing Game</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+  <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+  <script src = "./playerMovement.js"></script>
+  <script src = "./drive.js"></script>
+  <script src = "./game.js"></script>
+
+</head>
+<body>
+    <a-scene id = "scene" inspector-plugin-recast>
+        <a-assets>
+            <audio id = "car-drive" src = "./assets/sounds//Sports-Car-Driving-Soft-www.fesliyanstudios.com.mp3"></audio>
+            <a-asset-item id = "car" src = "./alfa_romeo_stradale_1967/scene.gltf"></a-asset-item>
+            <a-asset-item id = "park-s" src = "./a_park_structure/scene.gltf"></a-asset-item>
+            <a-asset-item id = "collider" src = "./navmesh (1).gltf"></a-asset-item>
+            <a-asset-item id = "wheel" src = "./assets/steering_wheel/scene.gltf"></a-asset-item>
+        </a-assets>
+
+        <a-entity id = "camera-rig" movement-controls="speed: 0.5; constrainToNavMesh: true" rotation = "0 0 0" position="0 0 2" drive game="play">
+
+        <a-entity position = "-20 1 20" camera wasd-controls look-controls="pointerLockEnabled: false">
+            <a-cursor></a-cursor>
+
+            <a-entity id="control-wheel" gltf-model="#wheel" position="-0.15 -0.13 -0.163" rotation="0 0 0"
+            scale="0.003 0.003 0.003">
+          </a-entity>
+
+          <a-entity id="gameover" position="18 2.5 -7" visible="false"
+          text="font: kelsonsans; width:50; height: 50; color: red;value: Game Over !!!">
+        </a-entity>
+
+
+            <a-entity id="move" position="-6.5 5 -7"
+            text="font: kelsonsans; width:10; height: 10; color: black;value: Press 'Up Arrow Key' for Speed ">
+          </a-entity>
+
+          <a-entity id="timer" position="3 5 -7"
+          text="font: kelsonsans; width:10; height: 10; color:black;value:00:00">
+        </a-entity>
+        
+          <a-entity id="stop" position="6.5 5 -7"
+            text="font: kelsonsans; width:10; height: 10;color: black;value: Press 'Spacebar key' for Break! ">
+          </a-entity>
+        
+          <a-entity id="speed" position="14 5 -7" text="font: kelsonsans; color:black; width:10; height: 5;value: 10">
+            <a-entity id="unit" position="1 0 0" text="font: kelsonsans;color:black; width:10; height: 5; value: km/h"></a-entity>
+          </a-entity>
+
+          <a-box id="control-break" src="./assets/break.png" color="grey" position="0.289 -0.25 -0.37136"
+          rotation="0 0 0" scale="0.1 0.1 0.001">
+        </a-box>
+        
+        <a-box id="control-acce" src="./assets/acc.png" color="gray" position="0.42593 -0.25 -0.37136"
+          rotation="0 0 0" scale="0.1 0.1 0.001">
+        </a-box>
+        </a-entity>
+
+        </a-entity>
+
+        <a-entity id="sound1" sound="src: #car-drive; poolSize:2; autoplay: false; volume: 10;loop:false"></a-entity>
+
+        <a-entity position = "0 0 0">
+            <a-box width = "25" height = "30" depth = "25" position = "7.5 12.5 -2" src = "./building/building1.jpg"></a-box>
+            <a-box width = "20" height = "40" depth = "20" position = "62.5 12.5 -62.5" src = "./building/building2.png"></a-box>
+            <a-box width = "15" height = "40" depth = "25" position = "27.5 12.5 -2" src = "./building/building3.jpg"></a-box>
+            <a-box width = "20" height = "30" depth = "30" position = "62.5 12.5 -37.5" src = "./building/building22.jpg"></a-box>
+            <a-box width = "20" height = "40" depth = "30" position = "62.5 12.5 -7.5" src = "./building/building23.jpg"></a-box>
+        </a-entity>
+
+        <a-entity>
+            <a-cylinder radius = "10" height = "30"  position = "60 13.5 18" src = "./building/building4.jpg"></a-cylinder>
+            <a-cone radius-bottom = "10" height = "40" position = "60 13 36" src = "./building/building5.jpg"></a-cone>
+            <a-box width = "15" height = "20" depth = "20" position = "60 10 54" src = "./building/building6.webp"></a-box>
+            <a-box width = "15" height = "30" depth = "15" position = "60 10 71.5" src = "./building/building7.jpg"></a-box>
+        </a-entity>
+
+        <a-entity>
+            <a-box width = "20" height = "35" depth = "15" position = "42.5 10 86.5" src = "./building/building8.webp"></a-box>
+            <a-box width = "15" height = "30" depth = "15" position = "25 10 86.5" src = "./building/building9.jpg"></a-box>
+            <a-box width = "25" height = "30" depth = "15" position = "5 10 86.5" src = "./building/building20.jpg"></a-box>
+        </a-entity>
+
+        <a-entity>
+            <a-box width = "25" height = "35" depth = "30" position = "7.5 10 -29.5" src = "./building/building10.jpg"></a-box>
+            <a-box width = "25" height = "30" depth = "15" position = "7.5 10 -80" src = "./building/building11.jpg"></a-box>
+            <a-box width = "35" height = "30" depth = "15" position = "37.5 10 -80" src = "./building/building21.jpg"></a-box>
+        </a-entity>
+
+        <a-entity>
+            <a-box width = "15" height = "45" depth = "15" position = "-12.5 10 -80" src = "./building/building12.jpg"></a-box>
+            <a-box width = "25" height = "30" depth = "15" position = "-32.5 12.8 -80" src = "./building/building13.jpg"></a-box>
+        </a-entity>
+
+        <a-entity>
+            <a-box width = "15" height = "35" depth = "25" position = "-52.5 15 -60" src = "./building/building14.jpg"></a-box>
+            <a-box width = "15" height = "30" depth = "35" position = "-52.5 10 -30" src = "./building/building15.jpg"></a-box>
+            <a-box width = "15" height = "35" depth = "25" position = "-52.5 15 0" src = "./building/building16.jpg"></a-box>
+            <a-box width = "15" height = "30" depth = "35" position = "-52.5 10 30" src = "./building/building17.jpg"></a-box>
+        </a-entity>
+
+        <a-entity>
+            <a-box width = "25" height = "35" depth = "25" position = "-32.5 15 60" src = "./building/building18.webp"></a-box>
+            <a-box width = "15" height = "30" depth = "35" position = "-12.5 10 65" src = "./building/building19.jpg"></a-box>
+        </a-entity>
+
+        <a-plane id="ground" src = "./assets/grass1.jpg" position="0 0 0" rotation="-90 0 0" height="200" width="200" color="green" static-body
+        visible="true">
+      </a-plane>
+
+    <!-- <a-entity id = "city-park-s" gltf-model = "#park-s" position = "22.5 0.1 47.5" scale = "0.7 0.7 0.5" rotation = "0 0 0">
+    </a-entity>   -->
+
+    <a-entity id="gameover" position="-0.5 5 -7"
+    text="font: kelsonsans; width:80; height: 50; color:black;value:GAME OVER !!!" visible = "false">
+  </a-entity>
+
+    <!-- <a-entity id="navigation-mesh" gltf-model="#collider" visible="false" nav-mesh> -->
+
+    </a-entity>
+    </a-scene>
+</body>
+</html>
